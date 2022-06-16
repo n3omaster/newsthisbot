@@ -59,7 +59,10 @@ class WelcomeController extends Controller
 
                 // if $new_tweet is type of Tweet
                 if ($new_tweet instanceof Tweet) {
+
+                    dd($new_tweet);
                     
+                    /*
                     $response = $this->twitter->tweets()->tweet($new_tweet);
 
                     dump($response);
@@ -70,6 +73,7 @@ class WelcomeController extends Controller
                         'replied' => true,
                         'response_id' => $response->data->id
                     ]);
+                    */
 
                 } else {
 

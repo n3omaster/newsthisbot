@@ -85,7 +85,7 @@ class CommandController extends Controller
      */
     public function cnn($tweet, $referenced_tweet)
     {
-        echo "<h1>RSP</h1>";
+        echo "<h1>CNN</h1>";
         echo "<p>" . $referenced_tweet->data->text . "</p>";
 
         // Now reply, save $tweet->id into DB for no more responses to it
