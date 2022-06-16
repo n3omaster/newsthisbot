@@ -13,29 +13,25 @@ class MediaBuilderController extends Controller
     // Ads: 900 to 975
 
     // Imag container by defult
-    private $metrics = [675, 975];
+    private $metrics = [1200, 630];
     private $newspapers = ['cnn', 'fox', 'abc', 'bbc', 'nbc', 'nyt', 'granma', 'cd'];
 
     /**
      * Make a new Cover with predefined models
      */
-    public function make_news_cover($newspaper = 'cnn', $text = 'This is a text to the image wirbwr pguhbw rghpuhwe rgo;uwehr gwr rgiub rgueir ', $image = 'images/FVUJNE_WQAcghIK.jpg')
+    public function make_news_cover($newspaper = 'cnn', $text = 'This is a text to the image wirbwr pguhbw rghpuhwe rgo;uwehr gwr rgiub rgueir This is a text to the image wirbwr pguhbw rghpuhwe rgo;uwehr gwr rgiub rgueir', $image = 'images/FVUJNE_WQAcghIK.jpg')
     {
-        // now create a image with this paramenters
-        $img = Image::make('newspapers/' . $newspaper . '.png');
+        $img = Image::make($image);
+        $img->fit($this->metrics[0], $this->metrics[1], function ($constraint) {
+            $constraint->upsize();
+        });
+
+        $picture = Image::make('newspapers/' . $newspaper . '.png');
+        $img->insert($picture, 'top-left', 0, 0);
 
         // Add text to the image from pixel 61 to 500
         $text_image = $this->image_container($text);
-        $img->insert($text_image, 'top-left', 0, 60);
-
-        // Add image to the image from pixel 500 to 900 but first create a canvas of 400x675
-        $picture = Image::make($image);
-        $picture->fit(675, 400, function ($constraint) {
-            $constraint->upsize();
-        });
-        $img->insert($picture, 'top-left', 0, 500);
-
-        // Add ads to the image from pixel 900 to 975
+        $img->insert($text_image, 'top-left', 10, 500);
 
         return $img->response('png');
     }
@@ -46,13 +42,13 @@ class MediaBuilderController extends Controller
      */
     public function image_container($text = 'The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog?')
     {
-        $width       = $this->metrics[0];
-        $height      = 440;                             // 500 - 60
+        $width       = 1055;
+        $height      = 80;
         $center_x    = $width / 2;
         $center_y    = $height / 2;
-        $max_len     = 20;
-        $font_size   = 60;
-        $font_height = 30;
+        $max_len     = 80;
+        $font_size   = 30;
+        $font_height = 20;
 
         $lines = explode("\n", wordwrap($text, $max_len));
         $y     = $center_y - ((count($lines) - 1) * $font_height);
@@ -62,7 +58,7 @@ class MediaBuilderController extends Controller
             $img->text($line, $center_x, $y, function ($font) use ($font_size) {
                 $font->file('fonts/ptsans.ttf');
                 $font->size($font_size);
-                $font->color('#2B2D2F');
+                $font->color('#202020');
                 $font->align('center');
                 $font->valign('center');
             });
