@@ -15,8 +15,8 @@ class WelcomeController extends Controller
     private $twitter;
     private $credentials;
     private $responses = [
-        'Tócate otra cosita, papi.',
-        '¿Cual es la gracia? ¿Cual es la gracia?',
+        'Traba, no te acostumbres',
+        'BREAKING NEWS!',
         'Papi no estoy pa ti hoy',
         'Te me calmas, que son una pila, te me calmas.',
         'Bah, a esta hora y con este recado'
@@ -55,6 +55,8 @@ class WelcomeController extends Controller
             // Loop over every Tweet and pass to Command Controller
             foreach ($tweets->data as $tweet) {
 
+                dump($tweet);
+
                 $new_tweet = (new CommandController())->build($this->twitter, $tweet);
 
                 // if $new_tweet is type of Tweet
@@ -62,7 +64,6 @@ class WelcomeController extends Controller
 
                     dd($new_tweet);
                     
-                    /*
                     $response = $this->twitter->tweets()->tweet($new_tweet);
 
                     dump($response);
@@ -73,8 +74,7 @@ class WelcomeController extends Controller
                         'replied' => true,
                         'response_id' => $response->data->id
                     ]);
-                    */
-
+                    
                 } else {
 
                     // Do nothing

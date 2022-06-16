@@ -19,21 +19,23 @@ class MediaBuilderController extends Controller
     /**
      * Make a new Cover with predefined models
      */
-    public function make_news_cover($newspaper = 'cnn', $text = 'This is a text to the image wirbwr pguhbw rghpuhwe rgo;uwehr gwr rgiub rgueir This is a text to the image wirbwr pguhbw rghpuhwe rgo;uwehr gwr rgiub rgueir', $image = 'images/FVUJNE_WQAcghIK.jpg')
+    public function make_news_cover($newspaper = 'cnn', $text = 'This is a text to the image', $id = "456", $image = 'images/FVUjgcSWUAEVvFg.jpg', $png_response = false)
     {
         $img = Image::make($image);
-        $img->fit($this->metrics[0], $this->metrics[1], function ($constraint) {
-            $constraint->upsize();
-        });
+        $img->fit($this->metrics[0], $this->metrics[1]);
 
         $picture = Image::make('newspapers/' . $newspaper . '.png');
         $img->insert($picture, 'top-left', 0, 0);
 
-        // Add text to the image from pixel 61 to 500
+        // Add text to the image
         $text_image = $this->image_container($text);
         $img->insert($text_image, 'top-left', 10, 500);
 
-        return $img->response('png');
+        if ($png_response) {
+            return $img->response('png');
+        } else {
+            return $img->save('responses/' . $id . '.png');
+        }
     }
 
 

@@ -13,7 +13,7 @@ class CommandController extends Controller
     private $commands = ['idem', 'cnn'];
     private $responses = [
         'Tócate otra cosita, papi.',
-        '¿Cual es la gracia? ¿Cual es la gracia?',
+        '¿Cual es la gracia?',
         'Papi no estoy pa ti hoy',
         'Te me calmas, que son una pila, te me calmas.',
         'Bah, a esta hora y con este recado'
@@ -108,14 +108,24 @@ class CommandController extends Controller
 
         // If no $referenced_tweet_filename then use a custom image
         if (isset($referenced_tweet_filename) && file_exists('images/' . $referenced_tweet_filename)) {
+
             $upload = 'images/' . $referenced_tweet_filename;
             echo "<h2>" . $upload . "</h2>";
+
+            // NOw process image with MediaBuilderController->make_news_cover()
+            $image_manager = new MediaBuilderController();
+            $img = $image_manager->make_news_cover("cnn", $referenced_tweet->data->text, $referenced_tweet->data->id, $upload);
+
+            dump($img);
+
         } else {
             $upload = 'images/default.jpeg';
         }
 
         // first, use the tweeets()->upload method to upload your image file
         $image = $this->twitter->tweets()->upload($upload);
+
+        dump($image);
 
         // pass the returned media id to a media object as an array
         $media = (new \Coderjerk\BirdElephant\Compose\Media)->mediaIds(
