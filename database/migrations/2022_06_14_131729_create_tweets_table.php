@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function ($table) {
-            $table->string('twitter_id')->after('password')->nullable();
+        Schema::create('tweets', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('tweet_id', false, true);
+            $table->boolean('replied');
+            $table->bigInteger('response_id');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function ($table) {
-            $table->dropColumn('twitter_id');
-        });
+        Schema::dropIfExists('tweets');
     }
 };

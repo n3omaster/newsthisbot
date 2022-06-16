@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function ($table) {
-            $table->string('twitter_id')->after('password')->nullable();
+            $table->string('oauth_type')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function ($table) {
-            $table->dropColumn('twitter_id');
+            $table->dropColumn('oauth_type');
         });
     }
 };

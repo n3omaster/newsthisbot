@@ -32,9 +32,15 @@ return [
     ],
 
     'twitter' => [
-        'client_id' => env('GITHUB_CLIENT_ID'),
-        'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'redirect' => 'http://example.com/callback-url',
+        'account' => env('TW_API_ACCOUNT', ''),
+        'client_id' => env('TW_API_KEY', ''),
+        'client_secret' => env('TW_API_SECRET', ''),
+        'bearer' => env('TW_API_BEARER', ''),
+        'redirect' => 'http://newsthisbot.test/permission/twitter/callback',
+
+        'bot_account' => env('TW_API_ACCOUNT', ''),
+        'bot_id' => env('TW_API_BOT_ID', ''),
+        'bot_secret' => env('TW_API_BOT_SECRET', ''),
     ],
 
 ];
